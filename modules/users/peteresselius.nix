@@ -6,14 +6,7 @@
     includes = [
       den._.define-user
       den._.primary-user
-
-      # Add home-manager configurations to host configurations
-      (
-        { userToHost }:
-        {
-          includes = [ (den._.home-manager { inherit (userToHost) host; }) ];
-        }
-      )
+      den._.home-manager
     ];
   };
 }
