@@ -49,11 +49,22 @@
       };
       url = "github:fzakaria/nix-auto-follow";
     };
+    nixos-raspberrypi = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs-modules-with-keys";
+        };
+      };
+      url = "github:nvmd/nixos-raspberrypi/main";
+    };
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
     nixpkgs-lib = {
       follows = "nixpkgs";
+    };
+    nixpkgs-modules-with-keys = {
+      url = "github:nvmd/nixpkgs/modules-with-keys-25.05";
     };
     systems = {
       url = "github:nix-systems/default";

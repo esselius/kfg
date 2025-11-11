@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "argononed": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1729566243,
+        "narHash": "sha256-DPNI0Dpk5aym3Baf5UbEe5GENDrSmmXVdriRSWE+rgk=",
+        "owner": "nvmd",
+        "repo": "argononed",
+        "rev": "16dbee54d49b66d5654d228d1061246b440ef7cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvmd",
+        "repo": "argononed",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -22,11 +38,11 @@
     },
     "den": {
       "locked": {
-        "lastModified": 1762717523,
-        "narHash": "sha256-dOep292lLsrQNgzsWyzEnkyWhse7p/zKeLseuoMXkUU=",
+        "lastModified": 1762872567,
+        "narHash": "sha256-lrJJAiWS4CIG73xQaRSl+qh1FkT+846SB1/yOfDaOHk=",
         "owner": "vic",
         "repo": "den",
-        "rev": "721c34b154acb249c9b2c10f8fe30fd2c89fe0cb",
+        "rev": "374ad5fb9c38ceb14b67c1e2855cb44dc7b34b94",
         "type": "github"
       },
       "original": {
@@ -140,6 +156,55 @@
         "type": "github"
       }
     },
+    "nixos-images": {
+      "inputs": {
+        "nixos-stable": [
+          "nixos-raspberrypi",
+          "nixpkgs"
+        ],
+        "nixos-unstable": [
+          "nixos-raspberrypi",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1747747741,
+        "narHash": "sha256-LUOH27unNWbGTvZFitHonraNx0JF/55h30r9WxqrznM=",
+        "owner": "nvmd",
+        "repo": "nixos-images",
+        "rev": "cbbd6db325775096680b65e2a32fb6187c09bbb4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvmd",
+        "ref": "sdimage-installer",
+        "repo": "nixos-images",
+        "type": "github"
+      }
+    },
+    "nixos-raspberrypi": {
+      "inputs": {
+        "argononed": "argononed",
+        "nixos-images": "nixos-images",
+        "nixpkgs": [
+          "nixpkgs-modules-with-keys"
+        ]
+      },
+      "locked": {
+        "lastModified": 1758967172,
+        "narHash": "sha256-zRASAVS7tX7gPdvCUbi2m7KGX0jNuMlaOFqbkUZhu9k=",
+        "owner": "nvmd",
+        "repo": "nixos-raspberrypi",
+        "rev": "09c214a30e5a27e0fa92a9975b91c82ba05d1f17",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvmd",
+        "ref": "main",
+        "repo": "nixos-raspberrypi",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1762361079,
@@ -156,6 +221,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-modules-with-keys": {
+      "locked": {
+        "lastModified": 1761934558,
+        "narHash": "sha256-0gB7tv25nPv+Vkr9YNi6gOEpX5cuDTnaTZlRNHZfgqA=",
+        "owner": "nvmd",
+        "repo": "nixpkgs",
+        "rev": "791ec2ce5034ba9658e12ee4c33a001a38f5280a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvmd",
+        "ref": "modules-with-keys-25.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "darwin": "darwin",
@@ -166,10 +247,12 @@
         "home-manager": "home-manager",
         "import-tree": "import-tree",
         "nix-auto-follow": "nix-auto-follow",
+        "nixos-raspberrypi": "nixos-raspberrypi",
         "nixpkgs": "nixpkgs",
         "nixpkgs-lib": [
           "nixpkgs"
         ],
+        "nixpkgs-modules-with-keys": "nixpkgs-modules-with-keys",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"
       }
