@@ -7,6 +7,9 @@
       den.aspects.starbuck._.hw
     ];
 
-    hw.includes = [ den.aspects.hw-rpi5 ];
+    hw.includes = [
+      den.aspects.hw-rpi5
+      den.aspects.disko-nvme-zfs
+    ];
   };
 }
