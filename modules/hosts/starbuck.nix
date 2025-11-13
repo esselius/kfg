@@ -12,7 +12,11 @@
     ];
 
     provides = {
-      services.includes = [ den.aspects.sshd ];
+      services.includes = [
+        den.aspects.sshd
+        den.aspects.incus
+        den.aspects.incus._.zfs-storage
+      ];
 
       hw.includes = [
         den.aspects.hw-rpi5

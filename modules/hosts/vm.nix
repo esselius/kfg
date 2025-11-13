@@ -16,7 +16,14 @@
       vm-base.nixos = {
         services.getty.autologinUser = "root";
       };
-      services.includes = [ den.aspects.postgres ];
+      services.includes = [
+        den.aspects.sshd
+        den.aspects.sshd._.forward-ports
+        den.aspects.postgres
+        den.aspects.incus
+        den.aspects.incus._.dir-storage
+        den.aspects.incus._.forward-ports
+      ];
     };
   };
 

@@ -29,6 +29,7 @@
       den._.primary-user
       den._.home-manager
       (den._.user-shell "fish")
+      den.aspects.hm-base
     ];
   };
 }
