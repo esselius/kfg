@@ -7,12 +7,16 @@
   den.aspects.vm = {
     nixos.system.stateVersion = "25.11";
 
-    includes = [ den.aspects.vm._.vm-base ];
+    includes = with den.aspects.vm._; [
+      vm-base
+      services
+    ];
 
     provides = {
       vm-base.nixos = {
         services.getty.autologinUser = "root";
       };
+      services.includes = [ den.aspects.postgres ];
     };
   };
 

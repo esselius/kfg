@@ -16,6 +16,9 @@
     den = {
       url = "github:vic/den";
     };
+    disko = {
+      url = "github:nix-community/disko";
+    };
     flake-aspects = {
       url = "github:vic/flake-aspects";
     };

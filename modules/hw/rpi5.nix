@@ -19,12 +19,12 @@
   };
 
   flake.lib.instantiate-rpi5-host =
-    args:
+    { modules }:
     inputs.nixos-raspberrypi.lib.nixosSystem {
       inherit (inputs.nixos-raspberrypi.inputs) nixpkgs;
+      inherit modules;
       specialArgs = { inherit (inputs) nixos-raspberrypi; };
-    }
-    // args;
+    };
 
   flake-file.inputs.nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
   flake-file.inputs.nixpkgs-modules-with-keys.url = "github:nvmd/nixpkgs/modules-with-keys-25.05";

@@ -1,15 +1,23 @@
 { den, ... }:
 {
   den.aspects.starbuck = {
-    nixos.system.stateVersion = "24.05";
+    nixos = {
+      system.stateVersion = "24.05";
+      networking.hostId = "9c8031a8";
+    };
 
-    includes = [
-      den.aspects.starbuck._.hw
+    includes = with den.aspects.starbuck._; [
+      hw
+      services
     ];
 
-    hw.includes = [
-      den.aspects.hw-rpi5
-      den.aspects.disko-nvme-zfs
-    ];
+    provides = {
+      services.includes = [ den.aspects.sshd ];
+
+      hw.includes = [
+        den.aspects.hw-rpi5
+        den.aspects.disko-nvme-zfs
+      ];
+    };
   };
 }
