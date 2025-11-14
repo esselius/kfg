@@ -69,6 +69,13 @@
     nixpkgs-modules-with-keys = {
       url = "github:nvmd/nixpkgs/modules-with-keys-25.05";
     };
+    secrets = {
+      flake = false;
+      url = "git+ssh://git@github.com/esselius/secrets";
+    };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+    };
     systems = {
       url = "github:nix-systems/default";
     };
