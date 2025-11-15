@@ -78,4 +78,6 @@
   den.aspects.ca-trust.nixos = {
     security.pki.certificateFiles = [ ../certs/root-ca.crt ];
   };
+
+  perSystem.treefmt.settings.global.excludes = [ "certs/*" ];
 }

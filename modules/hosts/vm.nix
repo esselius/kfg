@@ -13,10 +13,13 @@
     ];
 
     provides = {
-      vm-base.nixos = {
-        services.getty.autologinUser = "root";
-        kfg.domain = "localho.st";
-      };
+      vm-base.nixos =
+        { modulesPath, ... }:
+        {
+          services.getty.autologinUser = "root";
+          kfg.domain = "localho.st";
+          imports = [ (modulesPath + "/virtualisation/qemu-vm.nix") ];
+        };
       services.includes = [
         den.aspects.sshd
         den.aspects.sshd._.forward-ports

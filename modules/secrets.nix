@@ -49,7 +49,7 @@
 
           sops.secrets = (
             lib.mapAttrs (
-              k: v:
+              _k: v:
               (builtins.removeAttrs v [
                 "literal"
                 "path"

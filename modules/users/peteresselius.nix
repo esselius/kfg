@@ -1,6 +1,6 @@
 { den, ... }:
 {
-  den.aspects.peteresselius = rec {
+  den.aspects.peteresselius = {
     darwin =
       { pkgs, ... }:
       {
