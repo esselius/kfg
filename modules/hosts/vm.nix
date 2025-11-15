@@ -25,6 +25,7 @@
         den.aspects.incus._.dir-storage
         den.aspects.incus._.forward-ports
         den.aspects.ca-server
+        den.aspects.ca-server._.forward-ports
         den.aspects.ca-client
         den.aspects.ca-trust
         den.aspects.secrets._.fake

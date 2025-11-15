@@ -14,7 +14,7 @@
             config = {
               "core.https_address" = "0.0.0.0:9999";
               "acme.agree_tos" = "true";
-              "acme.domain" = "incus.${config.kfg.domain}";
+              "acme.domain" = config.kfg.domain;
               "acme.email" = config.security.acme.defaults.email;
               "acme.ca_url" = config.security.acme.defaults.server;
             };

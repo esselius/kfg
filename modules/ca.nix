@@ -1,60 +1,73 @@
 {
-  den.aspects.ca-server.nixos =
-    { config, ... }:
-    {
-      services.step-ca = {
-        enable = true;
+  den.aspects.ca-server = {
+    nixos =
+      { config, ... }:
+      {
+        networking.firewall.allowedTCPPorts = [ 8400 ];
 
-        port = 8400;
-        address = "0.0.0.0";
+        services.step-ca = {
+          enable = true;
 
-        intermediatePasswordFile = config.secrets.acme-intermediate-password.path;
+          port = 8400;
+          address = "0.0.0.0";
 
-        settings = {
-          root = config.secrets.acme-root-cert.path;
-          crt = config.secrets.acme-intermediate-cert.path;
-          key = config.secrets.acme-intermediate-key.path;
+          intermediatePasswordFile = config.secrets.acme-intermediate-password.path;
 
-          dnsNames = [ ("acme." + config.kfg.domain) ];
+          settings = {
+            root = config.secrets.acme-root-cert.path;
+            crt = config.secrets.acme-intermediate-cert.path;
+            key = config.secrets.acme-intermediate-key.path;
 
-          db = {
-            type = "badgerv2";
-            dataSource = "/var/lib/step-ca/db";
+            dnsNames = [ (config.kfg.domain) ];
+
+            db = {
+              type = "badgerv2";
+              dataSource = "/var/lib/step-ca/db";
+            };
+
+            authority.provisioners = [
+              {
+                type = "ACME";
+                name = "my-acme-provisioner";
+              }
+            ];
           };
+        };
 
-          authority.provisioners = [
-            {
-              type = "ACME";
-              name = "my-acme-provisioner";
-            }
-          ];
+        secrets.acme-root-cert = {
+          owner = "step-ca";
+          literal = builtins.readFile ../certs/root-ca.crt;
+        };
+        secrets.acme-intermediate-cert = {
+          owner = "step-ca";
+          literal = builtins.readFile ../certs/intermediate-ca.crt;
+        };
+        secrets.acme-intermediate-key = {
+          owner = "step-ca";
+          literal = builtins.readFile ../certs/intermediate-ca.key;
+        };
+        secrets.acme-intermediate-password = {
+          owner = "step-ca";
+          literalPath = "/dev/null";
         };
       };
 
-      secrets.acme-root-cert = {
-        owner = "step-ca";
-        literal = builtins.readFile ../certs/root-ca.crt;
-      };
-      secrets.acme-intermediate-cert = {
-        owner = "step-ca";
-        literal = builtins.readFile ../certs/intermediate-ca.crt;
-      };
-      secrets.acme-intermediate-key = {
-        owner = "step-ca";
-        literal = builtins.readFile ../certs/intermediate-ca.key;
-      };
-      secrets.acme-intermediate-password = {
-        owner = "step-ca";
-        literalPath = "/dev/null";
-      };
+    _.forward-ports.nixos = {
+      virtualisation.vmVariant.virtualisation.forwardPorts = [
+        {
+          host.port = 8400;
+          guest.port = 8400;
+        }
+      ];
     };
+  };
 
   den.aspects.ca-client.nixos =
     { config, ... }:
     {
       security.acme = {
         defaults = {
-          server = "https://acme.${config.kfg.domain}:8400/acme/my-acme-provisioner/directory";
+          server = "https://${config.kfg.domain}:8400/acme/my-acme-provisioner/directory";
 
           email = "e@mail.com";
         };
