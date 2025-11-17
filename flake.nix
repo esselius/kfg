@@ -6,12 +6,7 @@
 
   inputs = {
     darwin = {
-      inputs = {
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-      };
-      url = "github:nix-darwin/nix-darwin";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
     };
     den = {
       url = "github:vic/den";
@@ -34,12 +29,7 @@
       url = "github:hercules-ci/flake-parts";
     };
     home-manager = {
-      inputs = {
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-      };
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.05";
     };
     import-tree = {
       url = "github:vic/import-tree";
@@ -61,7 +51,7 @@
       url = "github:nvmd/nixos-raspberrypi/main";
     };
     nixpkgs = {
-      url = "github:nixos/nixpkgs/nixpkgs-unstable";
+      url = "github:nixos/nixpkgs/nixos-25.05";
     };
     nixpkgs-lib = {
       follows = "nixpkgs";
