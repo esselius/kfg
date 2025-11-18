@@ -35,6 +35,9 @@
       den.aspects.wezterm
       den.aspects.nixvim
       den.aspects.git
+      den.aspects.tools._.home
+      den.aspects.comma
+      den.aspects._1password
     ];
   };
 }

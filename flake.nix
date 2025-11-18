@@ -45,6 +45,9 @@
     nix-homebrew = {
       url = "github:zhaofengli/nix-homebrew";
     };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+    };
     nixos-raspberrypi = {
       inputs = {
         nixpkgs = {

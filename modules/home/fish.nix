@@ -4,6 +4,9 @@
 
     {
       programs = {
+        command-not-found.enable = false;
+        nix-index-database.comma.enable = true;
+
         fish = {
           enable = true;
           interactiveShellInit = ''
