@@ -10,6 +10,7 @@
   den.hosts.aarch64-darwin.Fox.users.peteresselius = { };
 
   flake-file.inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+  flake-file.inputs.nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   flake-file.inputs.darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
   flake-file.inputs.home-manager.url = "github:nix-community/home-manager/release-25.05";
 }

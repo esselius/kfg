@@ -42,6 +42,9 @@
       };
       url = "github:fzakaria/nix-auto-follow";
     };
+    nix-homebrew = {
+      url = "github:zhaofengli/nix-homebrew";
+    };
     nixos-raspberrypi = {
       inputs = {
         nixpkgs = {
@@ -58,6 +61,17 @@
     };
     nixpkgs-modules-with-keys = {
       url = "github:nvmd/nixpkgs/modules-with-keys-25.05";
+    };
+    nixpkgs-unstable = {
+      url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    };
+    nixvim = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs-unstable";
+        };
+      };
+      url = "github:nix-community/nixvim";
     };
     secrets = {
       flake = false;
