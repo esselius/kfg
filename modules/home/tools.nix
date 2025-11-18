@@ -13,6 +13,7 @@
       other
       ripgrep
       work-extras
+      mise
     ];
 
     ripgrep.homeManager = {
@@ -60,6 +61,13 @@
           google-cloud-sdk
         ];
       };
+
+    mise.homeManager = {
+      programs.mise = {
+        enable = true;
+        enableFishIntegration = true;
+      };
+    };
 
     data.homeManager =
       { pkgs, ... }:
