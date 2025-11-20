@@ -31,6 +31,8 @@
         den.aspects.ca-trust
         den.aspects.secrets._.fake
         den.aspects.domain
+        den.aspects.prometheus._.vm
+        den.aspects.grafana._.vm
       ];
     };
   };
