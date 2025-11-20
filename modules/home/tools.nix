@@ -90,6 +90,7 @@
           watch
           yq
           zstd
+          nixfmt-rfc-style
         ];
       };
     work-extras.homeManager =

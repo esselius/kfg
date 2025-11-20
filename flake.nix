@@ -11,6 +11,9 @@
     den = {
       url = "github:vic/den";
     };
+    determinate = {
+      url = "github:DeterminateSystems/determinate/lucperkins/cf-170-improve-the-nix-darwin-solution-for-better-user-experience";
+    };
     disko = {
       url = "github:nix-community/disko";
     };
