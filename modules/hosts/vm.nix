@@ -1,6 +1,7 @@
 {
   config,
   den,
+  lib,
   ...
 }:
 {
@@ -13,13 +14,10 @@
     ];
 
     provides = {
-      vm-base.nixos =
-        { modulesPath, ... }:
-        {
-          services.getty.autologinUser = "root";
-          kfg.domain = "localho.st";
-          imports = [ (modulesPath + "/virtualisation/qemu-vm.nix") ];
-        };
+      vm-base.nixos = {
+        services.getty.autologinUser = "root";
+        kfg.domain = "localho.st";
+      };
       services.includes = [
         den.aspects.sshd
         den.aspects.sshd._.forward-ports
@@ -41,5 +39,24 @@
     { pkgs, ... }:
     {
       apps.vm = config.flake.lib.mkVMApp config.flake.nixosConfigurations.vm pkgs false;
+    };
+
+  flake.lib.mkVMApp =
+    config: pkgs: useDiskImage:
+    let
+      extendedNixosConfig = config.extendModules { modules = [ module ]; };
+      program = lib.getExe extendedNixosConfig.config.system.build.vm;
+
+      module = {
+        virtualisation.vmVariant = {
+          virtualisation = {
+            host.pkgs = pkgs;
+            diskImage = lib.mkIf (!useDiskImage) null;
+          };
+        };
+      };
+    in
+    {
+      inherit program;
     };
 }
