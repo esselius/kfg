@@ -6,11 +6,20 @@
         server
         forward-ports
         tls
+        remote-write-receiver
       ];
 
       server.nixos = {
         services.prometheus = {
           enable = true;
+        };
+      };
+
+      remote-write-receiver.nixos = {
+        services.prometheus = {
+          extraFlags = [
+            "--web.enable-remote-write-receiver"
+          ];
         };
       };
 

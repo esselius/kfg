@@ -6,6 +6,8 @@
         base
         agent
         journal-to-loki
+        prometheus-remote-write
+        node-exporter
       ];
 
       base.nixos =
@@ -38,6 +40,31 @@
               endpoint {
                 url = "https://${config.kfg.domain}:3100/loki/api/v1/push"
               }
+            }
+          '';
+        };
+
+      prometheus-remote-write.nixos =
+        { config, ... }:
+        {
+          services.alloy.alloyFiles.prometheus-remote-write = ''
+            prometheus.remote_write "prometheus" {
+              endpoint {
+                url = "https://${config.kfg.domain}:9090/api/v1/write"
+              }
+            }
+          '';
+        };
+
+      node-exporter.nixos =
+        { config, ... }:
+        {
+          services.alloy.alloyFiles.node_exporter = ''
+            prometheus.exporter.unix "node_exporter" { }
+
+            prometheus.scrape "node_exporter" {
+              targets = prometheus.exporter.unix.node_exporter.targets
+              forward_to = [prometheus.remote_write.prometheus.receiver]
             }
           '';
         };
