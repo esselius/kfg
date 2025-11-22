@@ -8,6 +8,8 @@
         journal-to-loki
         prometheus-remote-write
         node-exporter
+        pyroscope
+        incus-metrics
       ];
 
       base.nixos =
@@ -56,15 +58,39 @@
           '';
         };
 
-      node-exporter.nixos =
+      node-exporter.nixos = {
+        services.alloy.alloyFiles.node_exporter = ''
+          prometheus.exporter.unix "node_exporter" { }
+
+          prometheus.scrape "node_exporter" {
+            targets = prometheus.exporter.unix.node_exporter.targets
+            forward_to = [prometheus.remote_write.prometheus.receiver]
+          }
+        '';
+      };
+      incus-metrics.nixos =
         { config, ... }:
         {
-          services.alloy.alloyFiles.node_exporter = ''
-            prometheus.exporter.unix "node_exporter" { }
-
-            prometheus.scrape "node_exporter" {
-              targets = prometheus.exporter.unix.node_exporter.targets
+          services.alloy.alloyFiles.incus = ''
+            prometheus.scrape "incus" {
+              scheme = "https"
+              metrics_path = "/1.0/metrics"
+              targets = [
+                {"__address__" = "${config.kfg.domain}:9999", "instance" = "incus"},
+              ]
               forward_to = [prometheus.remote_write.prometheus.receiver]
+            }
+          '';
+        };
+
+      pyroscope.nixos =
+        { config, ... }:
+        {
+          services.alloy.alloyFiles.pyroscope = ''
+            pyroscope.write "pyroscope" {
+              endpoint {
+                url = "http://${config.kfg.domain}:4040"
+              }
             }
           '';
         };

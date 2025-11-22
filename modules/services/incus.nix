@@ -13,6 +13,7 @@
           preseed = {
             config = {
               "core.https_address" = "0.0.0.0:9999";
+              "core.metrics_authentication" = "false";
               "acme.agree_tos" = "true";
               "acme.domain" = config.kfg.domain;
               "acme.email" = config.security.acme.defaults.email;

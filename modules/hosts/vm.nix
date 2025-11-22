@@ -35,6 +35,7 @@
         den.aspects.grafana._.vm
         den.aspects.loki._.vm
         den.aspects.alloy._.vm
+        den.aspects.pyroscope._.vm
       ];
     };
   };
