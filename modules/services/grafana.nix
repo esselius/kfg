@@ -6,6 +6,8 @@
         server
         forward-ports
         tls
+        loki-datasource
+        prometheus-datasource
       ];
 
       server.nixos = {
@@ -26,6 +28,37 @@
             protocol = "https";
             cert_file = config.security.acme.certs."grafana.${config.kfg.domain}".directory + "/cert.pem";
             cert_key = config.security.acme.certs."grafana.${config.kfg.domain}".directory + "/key.pem";
+          };
+        };
+      prometheus-datasource.nixos =
+        { config, ... }:
+        {
+          services.grafana.provision = {
+            enable = true;
+            datasources.settings.datasources = [
+              {
+                name = "Prometheus";
+                type = "prometheus";
+                access = "proxy";
+                url = "https://${config.kfg.domain}:${toString config.services.prometheus.port}";
+              }
+            ];
+          };
+        };
+
+      loki-datasource.nixos =
+        { config, ... }:
+        {
+          services.grafana.provision = {
+            enable = true;
+            datasources.settings.datasources = [
+              {
+                name = "loki";
+                type = "loki";
+                url = "https://${config.kfg.domain}:${toString config.services.loki.configuration.server.http_listen_port}";
+                access = "proxy";
+              }
+            ];
           };
         };
 
