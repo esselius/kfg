@@ -87,12 +87,42 @@
         { config, ... }:
         {
           services.alloy.alloyFiles.pyroscope = ''
+            discovery.process "all" { }
+
+            discovery.relabel "alloy" {
+                targets = discovery.process.all.targets
+                // Filter needed processes
+                rule {
+                    source_labels = ["__meta_process_exe"]
+                    regex = ".*/alloy"
+                    action = "keep"
+                }
+            }
+
+            pyroscope.ebpf "instance" {
+             forward_to     = [pyroscope.write.pyroscope.receiver]
+             targets = discovery.relabel.alloy.output
+            }
+
+            pyroscope.scrape "local" {
+              forward_to     = [pyroscope.write.pyroscope.receiver]
+              targets    = [
+                {"__address__" = "localhost:12345", "service_name"="grafana/alloy"},
+              ]
+            }
+
             pyroscope.write "pyroscope" {
               endpoint {
-                url = "http://${config.kfg.domain}:4040"
+                url = "https://${config.kfg.domain}:9096"
               }
             }
           '';
+          systemd.services.alloy = {
+            serviceConfig = {
+              CapabilityBoundingSet = "CAP_SYS_PTRACE";
+              AmbientCapabilities = "CAP_SYS_PTRACE";
+            };
+          };
         };
     };
   };

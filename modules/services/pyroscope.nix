@@ -7,14 +7,35 @@
     ];
 
     server.nixos =
-      { pkgs, lib, ... }:
+      { pkgs, config, ... }:
       let
         cfg = (pkgs.formats.yaml { }).generate "pyroscope.yaml" {
-          server.grpc_listen_port = 9096;
-
+          server = {
+            http_listen_port = 4040;
+            grpc_listen_port = 9096;
+            grpc_tls_config = {
+              cert_file = config.security.acme.certs."pyroscope.${config.kfg.domain}".directory + "/cert.pem";
+              key_file = config.security.acme.certs."pyroscope.${config.kfg.domain}".directory + "/key.pem";
+            };
+          };
         };
       in
       {
+        security.acme.certs."pyroscope.${config.kfg.domain}" = {
+          group = "pyroscope";
+          listenHTTP = ":80";
+          extraDomainNames = [ config.kfg.domain ];
+        };
+
+        users.groups.pyroscope = { };
+        users.users.pyroscope = {
+          description = "Pyroscope Service User";
+          group = "pyroscope";
+          home = "/var/lib/pyroscope";
+          createHome = true;
+          isSystemUser = true;
+        };
+
         systemd.services.pyroscope = {
           description = "Pyroscope Service Daemon";
           wants = [ "network-online.target" ];
@@ -23,6 +44,10 @@
 
           serviceConfig = {
             ExecStart = "${pkgs.pyroscope}/bin/pyroscope -config.file ${cfg}";
+            User = "pyroscope";
+            PrivateTmp = true;
+            Restart = "always";
+            WorkingDirectory = "/var/lib/pyroscope";
           };
         };
       };

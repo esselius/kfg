@@ -8,6 +8,7 @@
         tls
         loki-datasource
         prometheus-datasource
+        pyroscope-datasource
       ];
 
       server.nixos = {
@@ -57,6 +58,22 @@
                 name = "Loki";
                 type = "loki";
                 url = "https://${config.kfg.domain}:${toString config.services.loki.configuration.server.http_listen_port}";
+                access = "proxy";
+              }
+            ];
+          };
+        };
+
+      pyroscope-datasource.nixos =
+        { config, ... }:
+        {
+          services.grafana.provision = {
+            enable = true;
+            datasources.settings.datasources = [
+              {
+                name = "Pyroscope";
+                type = "grafana-pyroscope-datasource";
+                url = "http://${config.kfg.domain}:4040";
                 access = "proxy";
               }
             ];
