@@ -30,6 +30,7 @@
             cert_key = config.security.acme.certs."grafana.${config.kfg.domain}".directory + "/key.pem";
           };
         };
+
       prometheus-datasource.nixos =
         { config, ... }:
         {
@@ -53,7 +54,7 @@
             enable = true;
             datasources.settings.datasources = [
               {
-                name = "loki";
+                name = "Loki";
                 type = "loki";
                 url = "https://${config.kfg.domain}:${toString config.services.loki.configuration.server.http_listen_port}";
                 access = "proxy";

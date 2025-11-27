@@ -30,7 +30,6 @@
       den._.home-manager
       (den._.user-shell "fish")
       (den._.unfree [ "copilot.vim" ])
-      den.aspects.hm-base
       den.aspects.fish
       den.aspects.wezterm
       den.aspects.nixvim
